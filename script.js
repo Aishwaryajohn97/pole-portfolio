@@ -1,5 +1,5 @@
-
 document.addEventListener('DOMContentLoaded', () => {
+  // Auto image slideshow for Web and POS
   function autoSlideshow(id) {
     const container = document.getElementById(id);
     const slides = container.querySelectorAll("img");
@@ -25,3 +25,34 @@ document.addEventListener('DOMContentLoaded', () => {
     testimonials[ti].classList.add('active');
   }, 5000);
 });
+
+// 💱 Currency detection and conversion
+document.addEventListener('DOMContentLoaded', async () => {
+  const ratesContainer = document.querySelectorAll('.converted-rate');
+
+  async function detectCurrencyAndConvert() {
+    try {
+      const ipRes = await fetch('https://ipapi.co/json/');
+      const ipData = await ipRes.json();
+      const currency = ipData.currency;
+
+      const rateRes = await fetch(`https://api.exchangerate.host/latest?base=GBP`);
+      const rateData = await rateRes.json();
+      const rate = rateData.rates[currency];
+
+      if (!rate) return;
+
+      ratesContainer.forEach(el => {
+        const gbp = parseFloat(el.dataset.gbp);
+        const converted = gbp * rate;
+        el.innerText = `(≈ ${converted.toFixed(2)} ${currency})`;
+      });
+    } catch (err) {
+      console.error("Currency conversion failed:", err);
+    }
+  }
+
+  detectCurrencyAndConvert();
+});
+
+
