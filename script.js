@@ -15,10 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   autoSlideshow("web-carousel");
   autoSlideshow("pos-carousel");
-});
 
-// Auto slide testimonials
-document.addEventListener('DOMContentLoaded', () => {
+  // Auto slide testimonials
   const testimonials = document.querySelectorAll('#testimonial-carousel .testimonial-card');
   let ti = 0;
   setInterval(() => {
@@ -26,34 +24,4 @@ document.addEventListener('DOMContentLoaded', () => {
     ti = (ti + 1) % testimonials.length;
     testimonials[ti].classList.add('active');
   }, 5000);
-});
-
-
-document.addEventListener('DOMContentLoaded', async () => {
-  const ratesContainer = document.querySelectorAll('.converted-rate');
-
-  async function detectCurrencyAndConvert() {
-    try {
-      const ipRes = await fetch('https://ipapi.co/json/');
-      const ipData = await ipRes.json();
-      const country = ipData.country;
-      const currency = ipData.currency;
-
-      const rateRes = await fetch(`https://api.exchangerate.host/latest?base=GBP`);
-      const rateData = await rateRes.json();
-      const rate = rateData.rates[currency];
-
-      if (!rate) return;
-
-      ratesContainer.forEach(el => {
-        const gbp = parseFloat(el.dataset.gbp);
-        const converted = gbp * rate;
-        el.innerText = `(≈ ${converted.toFixed(2)} ${currency})`;
-      });
-    } catch (err) {
-      console.error("Currency conversion failed:", err);
-    }
-  }
-
-  detectCurrencyAndConvert();
 });
