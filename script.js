@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   autoSlideshow("web-carousel");
   autoSlideshow("pos-carousel");
 
-  // ✅ Auto testimonials
+  // ✅ Auto slide testimonials
   const testimonials = document.querySelectorAll('#testimonial-carousel .testimonial-card');
   let ti = 0;
   setInterval(() => {
@@ -59,6 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
     try {
       const rateRes = await fetch(`https://api.exchangerate.host/latest?base=GBP`);
       const rateData = await rateRes.json();
+
+      // Check if rates data exists
+      if (!rateData || !rateData.rates || !rateData.rates[currency]) {
+        console.error("Exchange rates not found. Using fallback currency.");
+        return;
+      }
+
       const rate = rateData.rates[currency];
 
       const symbols = {
