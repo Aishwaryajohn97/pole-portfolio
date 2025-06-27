@@ -1,82 +1,131 @@
-/* === Base Styles === */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
-  background: #f5faff;
-  color: #333;
+  background: linear-gradient(135deg, #e0f7fa, #f5faff, #eaf7ff);
+  background-size: 400% 400%;
+  animation: bgWaveMotion 30s ease infinite;
+  background-attachment: fixed;
+  color: #222;
 }
 
-/* === Navbar with Logo Left & Tabs Right === */
+@keyframes bgWaveMotion {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 .navbar {
-  background: #fff;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   position: sticky;
   top: 0;
   z-index: 1000;
 }
 
 .navbar-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem 5%;
   max-width: 1200px;
   margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 5%;
 }
 
 .logo img {
   height: 50px;
-  object-fit: contain;
 }
 
 .nav-links {
   list-style: none;
   display: flex;
   gap: 2rem;
-  margin: 0;
   padding: 0;
+  margin: 0;
 }
 
 .nav-links li a {
   text-decoration: none;
-  font-weight: bold;
   color: #0077aa;
-  transition: color 0.3s ease;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.nav-links li a:hover {
+.nav-links li a:hover,
+.nav-links li a.active {
   color: #005577;
 }
 
-/* === Hero Section === */
 .hero {
-  background: linear-gradient(to right, #d6f0ff, #f5fdff);
+  position: relative;
+  padding: 5rem 1rem 7rem;
+  background: linear-gradient(to right, #f1fbff, #ffffff);
   text-align: center;
-  padding: 3rem 1rem;
+  overflow: hidden;
+  background-image: url('https://www.transparenttextures.com/patterns/double-bubble-outline.png');
+  background-size: contain;
 }
 
-.hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.hero::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 150px;
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg") repeat-x;
+  background-size: cover;
+  animation: waveFlow 10s linear infinite;
+  z-index: 1;
+  opacity: 0.6;
 }
 
-.hero-content p {
+@keyframes waveFlow {
+  0% { background-position-x: 0; }
+  100% { background-position-x: 1000px; }
+}
+
+.hero h1 {
+  font-size: 2.8rem;
+  color: #00334d;
+}
+
+.hero p {
   font-size: 1.2rem;
-  color: #444;
+  color: #00334d;
 }
 
-/* === Section Layout === */
+/* === Transparent glossy section background === */
 .section {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 3rem 5%;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin: 2rem auto;
+}
+
+/* === Transparent cards === */
+.service-box,
+.pricing-card,
+.testimonial-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
 }
 
 h2 {
   text-align: center;
+  color: #00334d;
   margin-bottom: 2rem;
-  color: #0077aa;
 }
 
-/* === My Work Section === */
 .work-slideshows {
   display: flex;
   flex-wrap: wrap;
@@ -86,54 +135,43 @@ h2 {
 
 .slideshow-block {
   flex: 1 1 45%;
-  max-width: 700px;
-  min-width: 300px;
+  max-width: 600px;
   text-align: center;
 }
 
-/* === Fully Responsive Carousel === */
 .carousel {
   position: relative;
-  width: 100%;
   aspect-ratio: 16 / 9;
-  margin: auto;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .carousel img {
-  position: absolute;
   width: 100%;
   height: 100%;
   object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
 
 .carousel img.active {
   opacity: 1;
-  z-index: 2;
+  z-index: 1;
 }
 
-/* === Testimonials === */
+/* Testimonials */
 .testimonial-carousel {
-  position: relative;
-  width: 100%;
   max-width: 900px;
   margin: 2rem auto;
+  position: relative;
 }
 
 .testimonial-card {
-  background: #ffffffee;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  font-size: 1rem;
-  transition: opacity 1s ease;
   opacity: 0;
   position: absolute;
   width: 100%;
@@ -144,10 +182,10 @@ h2 {
   position: relative;
 }
 
-/* === Footer === */
+/* Footer */
 footer {
-  background: #00334d;
-  color: #fff;
+  background: #f1fbff;
+  color: #00334d;
   padding: 2rem 5%;
   text-align: center;
 }
@@ -156,9 +194,9 @@ footer {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-bottom: 1rem;
   max-width: 1200px;
   margin: auto;
+  margin-bottom: 2rem;
 }
 
 .footer-links ul {
@@ -167,45 +205,26 @@ footer {
 }
 
 .footer-links a {
-  color: #fff;
+  color: #00334d;
   text-decoration: none;
 }
 
-/* === Social Buttons === */
 .social-buttons {
-  text-align: center;
   margin-top: 1rem;
 }
 
 .social-buttons a {
   display: inline-block;
-  margin: 0.5rem 1rem;
-  padding: 10px 20px;
-  color: #fff;
-  border-radius: 5px;
+  margin: 0 10px;
   text-decoration: none;
-  font-weight: 500;
-  font-size: 1rem;
+  font-weight: bold;
 }
 
-.social-buttons a i {
-  margin-right: 8px;
-}
+.whatsapp-button { color: #00334d; }
+.instagram-button { color: #00334d; }
 
-.whatsapp-button {
-  background-color: #25D366;
-}
-
-.instagram-button {
-  background-color: #E1306C;
-}
-
-.social-buttons a:hover {
-  opacity: 0.85;
-}
-
-/* === Responsive Tweaks === */
-@media (max-width: 992px) {
+/* Responsive Design */
+@media (max-width: 768px) {
   .navbar-container {
     flex-direction: column;
     align-items: flex-start;
@@ -213,46 +232,14 @@ footer {
 
   .nav-links {
     flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-    padding-top: 1rem;
+    width: 100%;
   }
 
   .work-slideshows {
     flex-direction: column;
-    align-items: center;
   }
 
-  .slideshow-block {
-    max-width: 100%;
-  }
-
-  .testimonial-card {
-    width: 100%;
-  }
-
-  .footer-links {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-}
-
-@media (max-width: 600px) {
-  .hero-content h1 {
-    font-size: 2rem;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-  }
-
-  .nav-links {
-    font-size: 1rem;
-  }
-
-  .social-buttons a {
-    font-size: 0.95rem;
-    padding: 8px 16px;
+  .section {
+    padding: 2rem 1rem;
   }
 }

@@ -50,26 +50,24 @@ document.addEventListener('DOMContentLoaded', () => {
       const ipRes = await fetch('https://ipapi.co/json/', { cache: "no-store" });
       const ipData = await ipRes.json();
       if (ipData && ipData.currency) currency = ipData.currency;
-      console.log("Detected currency:", currency);  // Log detected currency
+      console.log("Detected currency:", currency);
     } catch (err) {
-      // fallback to browser locale
       const locale = navigator.language;
       currency = fallbackCurrencyMap[locale] || 'USD';
-      console.log("Using fallback currency:", currency);  // Log fallback currency
+      console.log("Using fallback currency:", currency);
     }
 
     try {
-      const rateRes = await fetch(`https://api.exchangerate-api.com/v4/latest/GBP`);  // Using a different API
+      const rateRes = await fetch(`https://api.exchangerate-api.com/v4/latest/GBP`);
       const rateData = await rateRes.json();
 
-      // Check if rates data exists
       if (!rateData || !rateData.rates || !rateData.rates[currency]) {
         console.error("Exchange rates not found. Using fallback currency.");
         return;
       }
 
       const rate = rateData.rates[currency];
-      console.log("Conversion rate for", currency, ":", rate);  // Log the conversion rate
+      console.log("Conversion rate for", currency, ":", rate);
 
       const symbols = {
         USD: '$',
@@ -94,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     } catch (e) {
       console.error("Exchange rate fetch failed:", e);
-      // If API fails, just display GBP prices
       ratesContainer.forEach(el => {
         const gbp = parseFloat(el.dataset.gbp);
         if (!isNaN(gbp)) {
