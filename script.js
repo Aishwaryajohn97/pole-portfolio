@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Auto image slideshow for Web and POS
+  // ✅ Auto image slideshow for Web and POS
   function autoSlideshow(id) {
     const container = document.getElementById(id);
     const slides = container.querySelectorAll("img");
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   autoSlideshow("web-carousel");
   autoSlideshow("pos-carousel");
 
-  // Auto slide testimonials
+  // ✅ Auto slide testimonials
   const testimonials = document.querySelectorAll('#testimonial-carousel .testimonial-card');
   let ti = 0;
   setInterval(() => {
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 5000);
 });
 
-// 💱 Currency detection and conversion
+// ✅ Currency detection and conversion using ipapi + exchangerate.host
 document.addEventListener('DOMContentLoaded', async () => {
   const ratesContainer = document.querySelectorAll('.converted-rate');
 
@@ -40,12 +40,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       const rateData = await rateRes.json();
       const rate = rateData.rates[currency];
 
-      if (!rate) return;
+      const symbols = {
+        USD: '$',
+        EUR: '€',
+        INR: '₹',
+        GHS: 'GH₵',
+        NGN: '₦',
+        CAD: 'C$',
+        AUD: 'A$',
+        GBP: '£'
+      };
+
+      if (!rate || !currency) return;
 
       ratesContainer.forEach(el => {
         const gbp = parseFloat(el.dataset.gbp);
-        const converted = gbp * rate;
-        el.innerText = `(≈ ${converted.toFixed(2)} ${currency})`;
+        if (!isNaN(gbp)) {
+          const converted = gbp * rate;
+          const symbol = symbols[currency] || '';
+          el.innerText = `(≈ ${symbol}${converted.toFixed(2)} ${currency})`;
+        }
       });
     } catch (err) {
       console.error("Currency conversion failed:", err);
@@ -54,5 +68,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   detectCurrencyAndConvert();
 });
+
+
 
 
