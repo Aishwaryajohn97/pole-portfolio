@@ -50,10 +50,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const ipRes = await fetch('https://ipapi.co/json/', { cache: "no-store" });
       const ipData = await ipRes.json();
       if (ipData && ipData.currency) currency = ipData.currency;
+      console.log("Detected currency:", currency);  // Log detected currency
     } catch (err) {
       // fallback to browser locale
       const locale = navigator.language;
       currency = fallbackCurrencyMap[locale] || 'USD';
+      console.log("Using fallback currency:", currency);  // Log fallback currency
     }
 
     try {
@@ -67,6 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const rate = rateData.rates[currency];
+      console.log("Conversion rate for", currency, ":", rate);  // Log the conversion rate
 
       const symbols = {
         USD: '$',
