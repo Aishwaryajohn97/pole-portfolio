@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const rateRes = await fetch(`https://api.exchangerate.host/latest?base=GBP`, { cache: "no-store" });
+      const rateRes = await fetch(`https://api.exchangerate-api.com/v4/latest/GBP`);  // Using a different API
       const rateData = await rateRes.json();
 
       // Check if rates data exists
